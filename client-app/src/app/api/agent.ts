@@ -2,20 +2,25 @@ import axios, { AxiosResponse } from "axios";
 import { IActivity } from "../models/activity";
 import { history } from "../..";
 import { toast } from "react-toastify";
+import { IUser, IUserFormValues } from "../models/user";
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 
 axios.interceptors.response.use(undefined, error => {
-  if (error.message === "Network Error" && !error.response){
+  if (error.message === "Network Error" && !error.response) {
     toast.error("Network error - make sure your API is running!");
   }
-  
+
   const { status, data, config } = error.response;
   if (status === 404) {
     history.push("/notfound");
   }
 
-  if (status === 400 && config.method === "get" && data.errors.hasOwnProperty("id")) {
+  if (
+    status === 400 &&
+    config.method === "get" &&
+    data.errors.hasOwnProperty("id")
+  ) {
     history.push("/notfound");
   }
 
@@ -64,6 +69,15 @@ const Activities = {
   delete: (id: string) => requests.del(`/activities/${id}`)
 };
 
+const User = {
+  current: (): Promise<IUser> => requests.get("/user"),
+  login: (user: IUserFormValues): Promise<IUser> =>
+    requests.post(`/user/login`, user),
+  register: (user: IUserFormValues): Promise<IUser> =>
+    requests.post(`/user/register`, user)
+};
+
 export default {
-  Activities
+  Activities,
+  User
 };
