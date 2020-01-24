@@ -152,7 +152,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                       ? () => history.push(`/activities/${activity.id}`)
                       : () => history.push("/activities")
                   }
-                  disabled={loading || invalid || pristine}
+                  disabled={loading}
                   floated="right"
                   type="submit"
                   content="Cancel"
