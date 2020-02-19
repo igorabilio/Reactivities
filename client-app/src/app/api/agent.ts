@@ -85,8 +85,7 @@ const Activities = {
   list: (): Promise<IActivity[]> => requests.get("/activities"),
   details: (id: string) => requests.get(`/activities/${id}`),
   create: (activity: IActivity) => requests.post("/activities", activity),
-  update: (activity: IActivity) =>
-    requests.put(`/activities/${activity.id}`, activity),
+  update: (activity: IActivity) => requests.put(`/activities/${activity.id}`, activity),
   delete: (id: string) => requests.del(`/activities/${id}`),
   attend: (id: string) => requests.post(`/activities/${id}/attend`, {}),
   unattend: (id: string) => requests.del(`/activities/${id}/attend`)
@@ -101,14 +100,14 @@ const User = {
 };
 
 const Profiles = {
-  get: (username: string): Promise<IProfile> =>
-    requests.get(`/profiles/${username}`),
-  uploadFoto: (photo: Blob): Promise<IPhoto> =>
-    requests.postForm(`/photos`, photo),
+  get: (username: string): Promise<IProfile> => requests.get(`/profiles/${username}`),
+  uploadFoto: (photo: Blob): Promise<IPhoto> => requests.postForm(`/photos`, photo),
   setMainPhoto: (id: string) => requests.post(`/photos/${id}/setMain`, {}),
   deletePhoto: (id: string) => requests.del(`/photos/${id}`),
-  updateProfile: (profile: Partial<IProfile>) =>
-    requests.put(`/profiles`, profile)
+  updateProfile: (profile: Partial<IProfile>) => requests.put(`/profiles`, profile),
+  follow: (username: string) => requests.post(`/profiles/${username}/follow`, {}),
+  unfollow: (username: string) => requests.del(`/profiles/${username}/follow`),
+  listFollowings: (username: string, predicate: string) => requests.get(`/profiles/${username}/follow?predicate=${predicate}`)
 };
 
 export default {
